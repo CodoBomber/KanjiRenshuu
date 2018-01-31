@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <MenuBar fx:id="menu" prefHeight="29.0" prefWidth="800.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="レベル(級)">
+                    <items>
+                  <MenuItem fx:id="hiragana" mnemonicParsing="false" onAction="#onLevelSelected" text="Hiragana" />
+                  <MenuItem fx:id="katakana" mnemonicParsing="false" onAction="#onLevelSelected" text="Katakana" />
+                  <MenuItem fx:id="jlpt5" mnemonicParsing="false" onAction="#onLevelSelected" text="JLPT5" />
+                  <MenuItem fx:id="jlpt4" mnemonicParsing="false" onAction="#onLevelSelected" text="JLPT4" />
+                  <MenuItem fx:id="jlpt3" mnemonicParsing="false" onAction="#onLevelSelected" text="JLPT3" />
+                  <MenuItem fx:id="jlpt2" mnemonicParsing="false" onAction="#onLevelSelected" text="JLPT2" />
+                  <MenuItem fx:id="jlpt1" mnemonicParsing="false" onAction="#onLevelSelected" text="JLPT1" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <Pane fx:id="ji" layoutX="250.0" layoutY="175.0" prefHeight="250.0" prefWidth="300.0" />
+      <Label layoutX="492.0" layoutY="65.0" prefHeight="62.0" prefWidth="269.0" text="左アローを押せば前の漢字に移される&#10;右アロー押せば次の漢字に移される&#10;スペースバーを押せばアニメーションが止まる" />
+      <CheckBox fx:id="randomize" layoutX="47.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSelectedListener" text="混ぜる" />
+    </children>
+</Pane>
