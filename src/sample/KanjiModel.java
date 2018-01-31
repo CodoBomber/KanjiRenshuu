@@ -14,8 +14,9 @@ public class KanjiModel {
     private int currentPosition;
     // TODO: 18/01/31 Поменять на другую колекцию
     final Map<String, Integer> kana = new HashMap<>();
+    private Map<String, Integer> kanjiOrderMap = new HashMap<>();
 
-    private void createMap() {
+    private void createKanaMap() {
         kana.put("a", 0);
         kana.put("i", 1);
         kana.put("u", 2);
@@ -65,7 +66,7 @@ public class KanjiModel {
     }
 
     KanjiModel(Level level, boolean randomize) {
-        createMap();
+        createKanaMap();
         changeLevel(level, randomize);
     }
 
@@ -74,13 +75,22 @@ public class KanjiModel {
             Stream<Path> paths = Files.list(Paths.get(level.getSource()));
             if (!randomize) {
                 if (!level.equals(Level.HIRAGANA) && !level.equals(Level.KATAKANA)) {
-                    paths = paths.sorted(
+                   /* paths = paths.sorted(
                             Comparator.comparing(
                                     p -> p.getFileName()
                                             .toString()
                             )
-                    );
-                    kanjiList = paths.collect(Collectors.toList());
+                    );*/
+                    createKanjiMap(level.getJlpt());
+                    Path[] kanjis = new Path[level.getJlpt().getQuantity()];
+                    paths.forEach(path -> {
+                        String hex = path.getFileName()
+                                .toString().split("\\.")[0];
+                        String baseFileName = String.valueOf(Character.toChars(Integer.parseInt(hex,16)));
+                        kanjis[kanjiOrderMap.get(baseFileName)] = path;
+                        kanjiList = Arrays.stream(kanjis).collect(Collectors.toList());
+                    });
+//                    kanjiList = paths.collect(Collectors.toList());
                 } else {
                     Path[] kanjis = new Path[46];
                     paths.forEach(path -> {
@@ -99,6 +109,12 @@ public class KanjiModel {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void createKanjiMap(JLPTFactory jlpt) {
+        for (int i = 0; i < jlpt.getQuantity(); i++) {
+            kanjiOrderMap.put(jlpt.getgKanjiData()[i], i);
+        }
     }
 
     public Path getKanji(int position) {
