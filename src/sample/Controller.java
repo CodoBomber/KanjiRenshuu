@@ -1,24 +1,13 @@
 package sample;
 
-import javafx.animation.Interpolator;
-import javafx.animation.Transition;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.nio.file.Path;
 
 public class Controller {
@@ -95,88 +84,6 @@ public class Controller {
 
     private void getNextKanji() {
         getAnimation(model.getNextKanji());
-    }
-
-    public class AnimatedGif extends Animation {
-
-        public AnimatedGif(Path path, double durationMs) {
-
-            GifDecoder d = new GifDecoder();
-            try {
-                d.read(new FileInputStream(new File(path.toUri())));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            Image[] sequence = new Image[ d.getFrameCount()];
-            for( int i=0; i < d.getFrameCount(); i++) {
-
-                WritableImage wimg = null;
-                BufferedImage bimg = d.getFrame(i);
-                sequence[i] = SwingFXUtils.toFXImage( bimg, wimg);
-
-            }
-
-            super.init( sequence, durationMs);
-        }
-
-    }
-
-    public class Animation extends Transition {
-
-        private ImageView imageView;
-        private int count;
-
-        private int lastIndex;
-
-        private Image[] sequence;
-        private boolean playing;
-
-        private Animation() {
-        }
-
-        public Animation( Image[] sequence, double durationMs) {
-            init( sequence, durationMs);
-        }
-
-        private void init( Image[] sequence, double durationMs) {
-            this.imageView = new ImageView(sequence[0]);
-            this.sequence = sequence;
-            this.count = sequence.length;
-
-            setCycleCount(1);
-            setCycleDuration(Duration.millis(durationMs));
-            setInterpolator(Interpolator.LINEAR);
-
-        }
-
-        protected void interpolate(double k) {
-
-            final int index = Math.min((int) Math.floor(k * count), count - 1);
-            if (index != lastIndex) {
-                imageView.setImage(sequence[index]);
-                lastIndex = index;
-            }
-
-        }
-
-        public ImageView getView() {
-            return imageView;
-        }
-
-        public void pause() {
-            super.pause();
-            playing = false;
-        }
-
-        public void play() {
-            super.play();
-            playing = true;
-        }
-
-        public boolean isPlaying() {
-            return this.playing;
-        }
     }
 
 }

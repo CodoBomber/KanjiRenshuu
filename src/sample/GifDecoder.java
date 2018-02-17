@@ -332,6 +332,10 @@ public class GifDecoder {
                 in = new BufferedInputStream(file);
 //            }
             status = read(in);
+        try {
+            in.close();
+        } catch (IOException ignore) {
+        }
         /*} catch (IOException e) {
             status = STATUS_OPEN_ERROR;
         }
