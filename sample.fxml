@@ -26,6 +26,6 @@
         </MenuBar>
         <Pane fx:id="ji" layoutX="250.0" layoutY="175.0" prefHeight="250.0" prefWidth="300.0" />
       <Label layoutX="492.0" layoutY="65.0" prefHeight="62.0" prefWidth="269.0" text="左アローを押せば前の漢字に移される&#10;右アロー押せば次の漢字に移される&#10;スペースバーを押せばアニメーションが止まる" />
-      <CheckBox fx:id="randomize" layoutX="47.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSelectedListener" text="混ぜる" />
+      <CheckBox fx:id="randomize" focusTraversable="false" layoutX="47.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSelectedListener" text="混ぜる" />
     </children>
 </Pane>
